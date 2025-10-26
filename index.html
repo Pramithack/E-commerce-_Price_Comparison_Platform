@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Price Comparison</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>E-commerce Price Comparison</h1>
+        <p class="subtitle">Compare product prices across Amazon & Flipkart in real-time</p>
+
+        <form class="search-form" method="POST">
+            <input type="text" name="product" placeholder="Enter product name..." required>
+            <button type="submit">Search</button>
+        </form>
+
+        {% if results %}
+            <div class="results">
+                {% for result in results %}
+                    <div class="card">
+                        <h3>{{ result.site }}</h3>
+                        <p><strong>{{ result.name }}</strong></p>
+                        <p>Price: {{ result.price }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            {% if request.method == 'POST' %}
+                <p class="no-results">⚠️ No results found. Try another product.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
